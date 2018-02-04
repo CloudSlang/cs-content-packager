@@ -83,6 +83,7 @@
         <!--Dependencies versions-->
         <score-content-sdk.version>1.10.6</score-content-sdk.version>
         <junit.version>4.12</junit.version>
+        <slf4j-simple.version>1.7.21</slf4j-simple.version>
         <!--Misc properties-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -130,9 +131,8 @@
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.25</version>
-            <scope>runtime</scope>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.javaparser</groupId>
@@ -175,6 +175,11 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
             <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cloudslang.lang</groupId>
+            <artifactId>cloudslang-compiler</artifactId>
+            <version>1.0.17</version>
         </dependency>
     </dependencies>
     </dependencyManagement>

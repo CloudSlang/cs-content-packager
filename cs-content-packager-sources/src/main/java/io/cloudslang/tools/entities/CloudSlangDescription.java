@@ -1,23 +1,22 @@
 package io.cloudslang.tools.entities;
 
+import lombok.Value;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
+import java.util.Properties;
+
+import static java.lang.String.format;
+
+@Value(staticConstructor = "of")
 public class CloudSlangDescription {
-    private final String namespace;
-    private final String description;
-    private final String input;
-    private final String output;
-    private final String result;
 
-    public CloudSlangDescription(String namespace, String description, String input, String output, String result) {
-        this.namespace = namespace;
-        this.description = description;
-        this.input = input;
-        this.output = output;
-        this.result = result;
-    }
 
-    public String getNamespace() {return namespace;}
-    public String getDescription() {return description;}
-    public String getInput() {return input;}
-    public String getOutput() {return output;}
-    public String getResult() {return result;}
+    String fullSlName;
+    String description;
+    Map<String, String> inputs;
+    Map<String, String> outputs;
+    Map<String, String> results;
+
+
 }
