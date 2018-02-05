@@ -8,10 +8,10 @@ CloudSlang Content Packager
 [![Build Status](https://travis-ci.org/CloudSlang/cs-content-packager.svg?branch=master)](https://travis-ci.org/CloudSlang/cs-content-packager)
 
 
-This repository contains a tool that packages existing content from [Cloudslang/cloud-slang-content](https://github.com/CloudSlang/cloud-slang-content).
+This repository contains a tool that packages existing content from [Cloudslang/cs-content](https://github.com/CloudSlang/cs-content).
 
-2. [General Usage](#general-usage)
-3. [Contribution Guideline](#contribution-guideline)
+1. [General Usage](#general-usage)
+2. [Contribution Guideline](#contribution-guideline)
 
 <a name="general-usage"/>
 
@@ -19,8 +19,7 @@ This repository contains a tool that packages existing content from [Cloudslang/
 
 cs-content-packager-plugin 
 
-This plugin can also be added as another step in a Maven build to generate content description properties files and 
-download cs-content dependencies.
+This plugin can be added as another step in a Maven build to generate content description properties file. 
 
 Maven plugin example:
 
@@ -33,9 +32,9 @@ Maven plugin example:
                 <version>${version}</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>prepare-packages</phase>
                         <goals>
-                            <goal>generate</goal>
+                            <goal>package</goal>
                         </goals>
                     </execution>
                 </executions>
