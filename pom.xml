@@ -26,7 +26,7 @@
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>CloudSlang tool for packaging content</description>
+    <description>CloudSlang tool for packaging content.</description>
     <url>https://github.com/CloudSlang/cs-content-packager</url>
 
     <licenses>
@@ -83,6 +83,7 @@
         <!--Dependencies versions-->
         <score-content-sdk.version>1.10.6</score-content-sdk.version>
         <junit.version>4.12</junit.version>
+        <slf4j-simple.version>1.7.21</slf4j-simple.version>
         <!--Misc properties-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -91,9 +92,92 @@
         <custom.nexus>overwritten_by_ci</custom.nexus>
     </properties>
 
+    <dependencyManagement>
     <dependencies>
-
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model-builder</artifactId>
+            <version>3.3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.esotericsoftware.yamlbeans</groupId>
+            <artifactId>yamlbeans</artifactId>
+            <version>1.08</version>
+        </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.github.javaparser</groupId>-->
+            <!--<artifactId>javaparser-core</artifactId>-->
+            <!--<version>2.1.0</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>commons-cli</groupId>-->
+            <!--<artifactId>commons-cli</artifactId>-->
+            <!--<version>1.4</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.thoughtworks.xstream</groupId>-->
+            <!--<artifactId>xstream</artifactId>-->
+            <!--<version>1.4.8</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.github.jknack</groupId>-->
+            <!--<artifactId>handlebars</artifactId>-->
+            <!--<version>4.0.6</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>javassist</groupId>-->
+            <!--<artifactId>javassist</artifactId>-->
+            <!--<version>3.12.1.GA</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cloudslang.lang</groupId>
+            <artifactId>cloudslang-compiler</artifactId>
+            <version>1.0.17</version>
+        </dependency>
     </dependencies>
+    </dependencyManagement>
 
     <build>
         <pluginManagement>
@@ -150,11 +234,9 @@
                         <include>**/*.java</include>
                         <include>pom.xml</include>
                     </includes>
-                    <!--Pass arguments using ${var} syntax in license.template file-->
                     <properties>
                         <copyright.year>2018</copyright.year>
                     </properties>
-                    <!--Custom mapping for java extensions-->
                     <useDefaultMapping>false</useDefaultMapping>
                     <mapping>
                         <java>cs-content-packager-java-header</java>
