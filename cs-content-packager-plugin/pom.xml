@@ -22,7 +22,7 @@
     <parent>
         <groupId>io.cloudslang.tools</groupId>
         <artifactId>cs-content-packager</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>cs-content-packager-plugin</artifactId>
