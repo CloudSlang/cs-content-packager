@@ -16,6 +16,8 @@
 package io.cloudslang.tools;
 
 
+import io.cloudslang.tools.services.CSDependenciesService;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -27,7 +29,8 @@ public class MainGenerator {
     public static final Path descriptionPath = Paths.get(System.getProperty("user.home") + "\\Desktop\\potato\\cp.properties");
 
     public static void main(String[] args){
-        saveDescriptionAsProperties(contentFiles, descriptionPath);
+//        saveDescriptionAsProperties(contentFiles, descriptionPath);
+        CSDependenciesService.downloadGavDependencies(contentFiles, descriptionPath);
     }
 
 }
