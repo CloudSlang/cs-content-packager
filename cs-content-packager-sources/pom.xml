@@ -81,6 +81,14 @@
             <!--<artifactId>maven-dependency-plugin</artifactId>-->
             <!--<version>3.0.2</version>-->
         <!--</dependency>-->
+        <dependency>
+            <groupId>com.github.jknack</groupId>
+            <artifactId>handlebars</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-invoker</artifactId>
+        </dependency>
     </dependencies>
     
 </project>
