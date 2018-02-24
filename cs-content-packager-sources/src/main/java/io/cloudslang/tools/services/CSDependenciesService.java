@@ -16,22 +16,16 @@
 package io.cloudslang.tools.services;
 
 
-import com.github.jknack.handlebars.EscapingStrategy;
-import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
-import com.github.jknack.handlebars.io.FileTemplateLoader;
-import com.github.jknack.handlebars.io.TemplateLoader;
 import io.cloudslang.tools.entities.CloudSlangFile;
-import lombok.SneakyThrows;
+import io.cloudslang.tools.utils.HandlebarsUtils;
+import io.cloudslang.tools.utils.MavenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.maven.shared.invoker.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -62,42 +56,16 @@ public class CSDependenciesService {
                     }
                 })
                 .map(gav -> splitPreserveAllTokens(gav, ":"))
-                .map(splitGav -> getArtifactMap(splitGav))
+                .map(splitGav -> MavenUtils.getArtifactMap(splitGav))
                 .collect(Collectors.toSet());
 
-        final Optional<Template> optionalTemplate = loadTemplate(TEMPLATE_POM_HBS);
+        final Optional<Template> optionalTemplate = HandlebarsUtils.loadTemplate(TEMPLATE_POM_HBS);
 
         final Optional<Path> pomPath = optionalTemplate.flatMap(template ->
                 getPomContents(template, artifacts, destination.toString()))
                 .flatMap(content -> saveToTemp(content));
 
-        pomPath.ifPresent(pom -> runMavenOnPom(pom));
-
-    }
-
-    private static void runMavenOnPom(@NotNull final Path pom) {
-        final InvocationRequest request = getRequest(pom);
-
-        try {
-            final InvocationResult result = new DefaultInvoker().execute(request);
-
-            if (0 != result.getExitCode()) {
-                if (null != result.getExecutionException()) {
-                    log.error(result.getExecutionException().toString());
-                }
-            }
-        } catch (MavenInvocationException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static InvocationRequest getRequest(@NotNull final Path pom) {
-        final InvocationRequest request = new DefaultInvocationRequest();
-        request.setPomFile(pom.toFile());
-        request.setGoals(Collections.singletonList("package"));
-        request.setUpdateSnapshots(true);
-        request.setThreads("2.0C");
-        return request;
+        pomPath.ifPresent(pom -> MavenUtils.runMavenOnPom(pom));
     }
 
     @NotNull
@@ -111,19 +79,6 @@ public class CSDependenciesService {
             log.error(ExceptionUtils.getStackTrace(e));
             return Optional.empty();
         }
-    }
-
-    @NotNull
-    private static Map<String, String> getArtifactMap(@NotNull final String[] splitGav) {
-        if (splitGav.length < 3) {
-            throw new IllegalArgumentException();
-        }
-
-        return new HashMap<String, String>() {{
-            put("groupId", splitGav[0]);
-            put("artifactId", splitGav[1]);
-            put("version", splitGav[2]);
-        }};
     }
 
     private static Optional<String> getPomContents(@NotNull final Template template,
@@ -142,23 +97,6 @@ public class CSDependenciesService {
             e.printStackTrace();
             return Optional.empty();
         }
-    }
-
-    private static Optional<Template> loadTemplate(@NotNull final String pathToTemplate) {
-        final TemplateLoader templateLoader = new FileTemplateLoader("", "");
-        final Handlebars handlebars = new Handlebars(templateLoader).with(EscapingStrategy.XML);
-        try {
-            return Optional.of(handlebars.compileInline(loadTemplateString(pathToTemplate)));
-        } catch (IOException e) {
-            log.error(ExceptionUtils.getStackTrace(e));
-            return Optional.empty();
-        }
-    }
-
-    @SneakyThrows
-    private static String loadTemplateString(@NotNull final String pathToTemplate) {
-        final InputStream inputStream = CSDependenciesService.class.getResourceAsStream(pathToTemplate);
-        return IOUtils.toString(inputStream, UTF_8);
     }
 
 }
