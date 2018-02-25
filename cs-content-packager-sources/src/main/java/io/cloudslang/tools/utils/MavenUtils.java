@@ -1,3 +1,17 @@
+/*
+ * (c) Copyright 2018 Micro Focus, L.P.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Apache License v2.0 which accompany this distribution.
+ *
+ * The Apache License is available at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.cloudslang.tools.utils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +56,7 @@ public class MavenUtils {
     private static InvocationRequest getRequest(@NotNull final Path pom) {
         final InvocationRequest request = new DefaultInvocationRequest();
         request.setPomFile(pom.toFile());
-        request.setGoals(Arrays.asList(PACKAGE, CLEAN));
+        request.setGoals(Arrays.asList(CLEAN, PACKAGE));
         request.setUpdateSnapshots(true);
         request.setThreads(THREAD_COUNT);
         return request;

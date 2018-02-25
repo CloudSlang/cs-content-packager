@@ -56,16 +56,16 @@ public class CSDependenciesService {
                     }
                 })
                 .map(gav -> splitPreserveAllTokens(gav, ":"))
-                .map(splitGav -> MavenUtils.getArtifactMap(splitGav))
+                .map(MavenUtils::getArtifactMap)
                 .collect(Collectors.toSet());
 
         final Optional<Template> optionalTemplate = HandlebarsUtils.loadTemplate(TEMPLATE_POM_HBS);
 
         final Optional<Path> pomPath = optionalTemplate.flatMap(template ->
                 getPomContents(template, artifacts, destination.toString()))
-                .flatMap(content -> saveToTemp(content));
+                .flatMap(CSDependenciesService::saveToTemp);
 
-        pomPath.ifPresent(pom -> MavenUtils.runMavenOnPom(pom));
+        pomPath.ifPresent(MavenUtils::runMavenOnPom);
     }
 
     @NotNull
