@@ -56,7 +56,7 @@ public class MavenUtils {
     private static InvocationRequest getRequest(@NotNull final Path pom) {
         final InvocationRequest request = new DefaultInvocationRequest();
         request.setPomFile(pom.toFile());
-        request.setGoals(Arrays.asList(CLEAN, PACKAGE));
+        request.setGoals(Arrays.asList(PACKAGE, CLEAN));
         request.setUpdateSnapshots(true);
         request.setThreads(THREAD_COUNT);
         return request;
