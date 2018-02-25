@@ -26,8 +26,7 @@ import java.io.File;
 import static io.cloudslang.tools.services.CSDescriptionService.saveDescriptionAsProperties;
 
 
-@Mojo(name = "package",
-        defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
+@Mojo(name = "package", threadSafe = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
 
 public class PackageMojo extends AbstractMojo {
 
@@ -39,11 +38,11 @@ public class PackageMojo extends AbstractMojo {
 
     public void execute() throws MojoExecutionException {
 
-            try {
-                saveDescriptionAsProperties(contentFiles.toPath(), descriptionPath.toPath());
-            } catch (Exception e) {
-                throw new MojoExecutionException("An error occurred while trying to extract the metadata for: " + contentFiles.getAbsolutePath(), e);
-            }
+        try {
+            saveDescriptionAsProperties(contentFiles.toPath(), descriptionPath.toPath());
+        } catch (Exception e) {
+            throw new MojoExecutionException("An error occurred while trying to extract the metadata for: " + contentFiles.getAbsolutePath(), e);
+        }
     }
 
 }

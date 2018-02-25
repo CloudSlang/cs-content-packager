@@ -15,20 +15,21 @@
 
 package io.cloudslang.tools;
 
-
-import io.cloudslang.tools.services.CSDependenciesService;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import static io.cloudslang.tools.services.CSDependenciesService.downloadGavDependencies;
+import static io.cloudslang.tools.services.CSDescriptionService.saveDescriptionAsProperties;
 
 public class MainGenerator {
 
     public static final Path contentFiles = Paths.get(String.valueOf(Paths.get(System.getProperty("user.home") + "\\cloudslang\\cs-content\\content\\io\\cloudslang\\base")));
-    public static final Path destination = Paths.get(System.getProperty("user.home") + "\\Desktop\\potato");
+    public static final Path descriptionPath = Paths.get(System.getProperty("user.home") + "\\Desktop\\cp.properties");
+    public static final Path destination = Paths.get(System.getProperty("user.home") + "\\Desktop\\potatoes");
 
-    public static void main(String[] args){
-//        saveDescriptionAsProperties(contentFiles, descriptionPath);
-        CSDependenciesService.downloadGavDependencies(contentFiles, destination);
+    public static void main(String[] args) {
+        saveDescriptionAsProperties(contentFiles, descriptionPath);
+        downloadGavDependencies(contentFiles, destination);
     }
 
 }

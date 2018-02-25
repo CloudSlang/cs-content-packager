@@ -15,6 +15,7 @@
 
 package io.cloudslang.tools;
 
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -25,9 +26,9 @@ import java.io.File;
 import static io.cloudslang.tools.services.CSDependenciesService.downloadGavDependencies;
 
 
-@Mojo(name = "dependencies",
-        defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
-public class DependenciesMojo {
+@Mojo(name = "copy-dependencies", threadSafe = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
+
+public class CopyDependenciesMojo extends AbstractMojo {
     @Parameter(property = "contentFiles", defaultValue = "${project.build.outputDirectory}/Content/Library")
     protected File contentFiles;
 

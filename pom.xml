@@ -167,11 +167,6 @@
                 <version>${cloudslang-compiler.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.jknack</groupId>
-                <artifactId>handlebars</artifactId>
-                <version>${handlebars.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.maven.shared</groupId>
                 <artifactId>maven-invoker</artifactId>
                 <version>${maven-invoker.version}</version>

@@ -3,23 +3,27 @@
 </a>
 
 CloudSlang Content Packager
-============================
+===========================
 
-[![Build Status](https://travis-ci.org/CloudSlang/cs-content-packager.svg?branch=master)](https://travis-ci.org/CloudSlang/cs-content-packager)
+| Module | Travis | Release | Description |
+| ----- | ----- | ----- | ----- |
+| cs-content-packager | [![Build Status](https://travis-ci.org/CloudSlang/cs-content-packager.svg?branch=master)](https://travis-ci.org/CloudSlang/cs-content-packager) | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.tools/cs-content-packager/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.cloudslang.tools/cs-content-packager) | Maven - CloudSlang content package helper. |
 
-
-This repository contains a tool that packages existing content from [Cloudslang/cs-content](https://github.com/CloudSlang/cs-content).
+This repository contains the sources and a maven plugin that generates the metadata and downloads dependencies for existing content from [Cloudslang/cs-content](https://github.com/CloudSlang/cs-content)
 
 1. [General Usage](#general-usage)
 2. [Contribution Guideline](#contribution-guideline)
 
 <a name="general-usage"/>
 
-## General usage
+### Pre-Requisites:
+    Maven version >= 3.0.3
+    Java JDK version >= 8
 
-cs-content-packager-plugin 
+## General usage for - cs-content-packager-plugin
 
-This plugin can be added as another step in a Maven build to generate content description properties file. 
+This plugin can be added as another step in a Maven build to generate content description properties file(s) 
+and/or download content dependencies (for operations that use Java @Actions). 
 
 Maven plugin example:
 
@@ -29,12 +33,19 @@ Maven plugin example:
             <plugin>
                 <groupId>io.cloudslang.tools</groupId>
                 <artifactId>cs-content-packager-plugin</artifactId>
-                <version>${version}</version>
+                <version>RELEASE</version>
                 <executions>
                     <execution>
                         <phase>prepare-packages</phase>
                         <goals>
                             <goal>package</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>copy content dependencies</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
                         </goals>
                     </execution>
                 </executions>
