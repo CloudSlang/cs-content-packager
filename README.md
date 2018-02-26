@@ -17,13 +17,12 @@ This repository contains the sources and a maven plugin that generates the metad
 <a name="general-usage"/>
 
 ### Pre-Requisites:
-    Maven version >= 3.0.3
     Java JDK version >= 8
-    M2_HOME
+    M2_HOME must be set to the path of the Maven installation (>=3.2.1)
 
 ## General usage for - cs-content-packager-plugin
 
-This plugin can be added as another step in a Maven build to generate content description properties file(s) 
+This plugin can be added as another step in a Maven build (ThreadSafe) to generate content description properties file(s) 
 and/or download content dependencies (for operations that use Java @Actions). 
 
 Maven plugin example:
