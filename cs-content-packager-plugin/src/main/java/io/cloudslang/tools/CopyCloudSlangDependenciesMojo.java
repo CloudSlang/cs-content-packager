@@ -23,26 +23,24 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
 
-import static io.cloudslang.tools.services.CSDescriptionService.saveDescriptionAsProperties;
+import static io.cloudslang.tools.services.CSDependenciesService.downloadGavDependencies;
 
 
-@Mojo(name = "package", threadSafe = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
+@Mojo(name = "copy-cloudslang-dependencies", threadSafe = true, defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
 
-public class PackageMojo extends AbstractMojo {
-
+public class CopyCloudSlangDependenciesMojo extends AbstractMojo {
     @Parameter(property = "contentFiles", defaultValue = "${project.build.outputDirectory}/Content/Library")
     protected File contentFiles;
 
-    @Parameter(property = "descriptionPath", defaultValue = "${project.build.outputDirectory}/resource-bundles/cp.properties")
-    protected File descriptionPath;
+    @Parameter(property = "destination", defaultValue = "${project.build.outputDirectory}/Lib")
+    protected File destination;
 
     public void execute() throws MojoExecutionException {
 
         try {
-            saveDescriptionAsProperties(contentFiles.toPath(), descriptionPath.toPath());
+            downloadGavDependencies(contentFiles.toPath(), destination.toPath());
         } catch (Exception e) {
-            throw new MojoExecutionException("An error occurred while trying to extract the metadata for: " + contentFiles.getAbsolutePath(), e);
+            throw new MojoExecutionException("An error occurred while trying to download dependencies for: " + contentFiles.getAbsolutePath(), e);
         }
     }
-
 }

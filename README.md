@@ -19,6 +19,7 @@ This repository contains the sources and a maven plugin that generates the metad
 ### Pre-Requisites:
     Maven version >= 3.0.3
     Java JDK version >= 8
+    M2_HOME
 
 ## General usage for - cs-content-packager-plugin
 
@@ -36,16 +37,17 @@ Maven plugin example:
                 <version>RELEASE</version>
                 <executions>
                     <execution>
+                        <id>extract metadata</id>
                         <phase>prepare-packages</phase>
                         <goals>
-                            <goal>package</goal>
+                            <goal>extract-description</goal>
                         </goals>
                     </execution>
                     <execution>
                         <id>copy content dependencies</id>
                         <phase>process-resources</phase>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>copy-cloudslang-dependencies</goal>
                         </goals>
                     </execution>
                 </executions>
