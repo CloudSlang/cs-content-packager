@@ -47,4 +47,32 @@ public class CloudSlangFile {
         }
         return slangSource.getName();
     }
+
+    public boolean isJavaOperation() {
+        final YamlReader yamlReader = new YamlReader(new StringReader(slangSource.getContent()));
+        try {
+            final Optional<Object> gavOpt = simpleYPath(yamlReader.read(),
+                    "operation.java_action.gav", ".");
+
+            return gavOpt.isPresent();
+        } catch (YamlException e) {
+            return false;
+        }
+    }
+
+    public String getGav() {
+        final YamlReader yamlReader = new YamlReader(new StringReader(slangSource.getContent()));
+        try {
+            final Optional<Object> gavOpt = simpleYPath(yamlReader.read(),
+                    "operation.java_action.gav", ".");
+
+            final Object gav = gavOpt.orElseGet(() -> {
+                throw new RuntimeException("GAV not found in Slang file.");
+            });
+
+            return gav.toString();
+        } catch (YamlException e) {
+            throw new RuntimeException("Failed to parse the Slang file.");
+        }
+    }
 }
