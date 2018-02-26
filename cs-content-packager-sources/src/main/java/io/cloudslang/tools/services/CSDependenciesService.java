@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.FileAttribute;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -74,12 +75,16 @@ public class CSDependenciesService {
     }
 
     @NotNull
-    private static Optional<Path> saveToTemp(String content) {
+    private static Optional<Path> saveToTemp(@NotNull final String pomContent) {
         try {
-            final Path path = Files.createTempFile("pom", ".xml");
-            FileUtils.forceDeleteOnExit(path.toFile());
-            writeStringToFile(path.toFile(), content, UTF_8);
-            return Optional.of(path);
+            final Path dirPath = Files.createTempDirectory("cs_temp_");
+            FileUtils.forceDeleteOnExit(dirPath.toFile());
+
+            final Path pomFile = Files.createTempFile(dirPath, "pom_", ".xml");
+            FileUtils.forceDeleteOnExit(pomFile.toFile());
+
+            writeStringToFile(pomFile.toFile(), pomContent, UTF_8);
+            return Optional.of(pomFile);
         } catch (IOException e) {
             log.error(ExceptionUtils.getStackTrace(e));
             return Optional.empty();
