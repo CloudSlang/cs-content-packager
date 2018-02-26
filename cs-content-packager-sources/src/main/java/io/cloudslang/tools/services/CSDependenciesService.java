@@ -29,7 +29,10 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -66,6 +69,8 @@ public class CSDependenciesService {
                 .flatMap(CSDependenciesService::saveToTemp);
 
         pomPath.ifPresent(MavenUtils::runMavenOnPom);
+
+        pomPath.ifPresent(MavenUtils::runMavenCleanOnPom);
     }
 
     @NotNull

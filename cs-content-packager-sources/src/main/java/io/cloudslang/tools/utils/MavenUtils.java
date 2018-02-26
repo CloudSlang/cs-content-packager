@@ -14,6 +14,7 @@
  */
 package io.cloudslang.tools.utils;
 
+import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.maven.shared.invoker.*;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -38,8 +40,18 @@ public class MavenUtils {
     public static final String VERSION = "version";
 
     public static void runMavenOnPom(@NotNull final Path pom) {
-        final InvocationRequest request = getRequest(pom);
+        final InvocationRequest request = getDownloadRequest(pom);
 
+        invokeMavenRequest(request);
+    }
+
+    public static void runMavenCleanOnPom(@NotNull final Path pom) {
+        final InvocationRequest request = getCleanRequest(pom);
+
+        invokeMavenRequest(request);
+    }
+
+    private static void invokeMavenRequest(@NotNull final InvocationRequest request) {
         try {
             final InvocationResult result = new DefaultInvoker().execute(request);
 
@@ -53,13 +65,20 @@ public class MavenUtils {
         }
     }
 
-    private static InvocationRequest getRequest(@NotNull final Path pom) {
-        final InvocationRequest request = new DefaultInvocationRequest();
-        request.setPomFile(pom.toFile());
-        request.setGoals(Arrays.asList(PACKAGE, CLEAN));
-        request.setUpdateSnapshots(true);
-        request.setThreads(THREAD_COUNT);
-        return request;
+    private static InvocationRequest getDownloadRequest(@NotNull final Path pom) {
+        return getRequest(pom, Arrays.asList(CLEAN, PACKAGE));
+    }
+
+    private static InvocationRequest getCleanRequest(@NotNull final Path pom) {
+        return getRequest(pom, ImmutableList.of(CLEAN));
+    }
+
+    private static InvocationRequest getRequest(@NotNull final Path pom, @NotNull final List<String> goals) {
+        return new DefaultInvocationRequest()
+                .setPomFile(pom.toFile())
+                .setGoals(goals)
+                .setUpdateSnapshots(true)
+                .setThreads(THREAD_COUNT);
     }
 
     @NotNull
