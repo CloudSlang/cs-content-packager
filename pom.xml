@@ -55,6 +55,7 @@
     </distributionManagement>
 
     <developers>
+        <!--come back safe-->
         <developer>
             <name>Robert Sandor</name>
             <email>sandorrobertk94@gmail.com</email>
