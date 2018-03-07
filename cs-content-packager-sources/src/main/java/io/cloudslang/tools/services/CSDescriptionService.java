@@ -31,6 +31,7 @@ import static io.cloudslang.tools.services.CSFileService.getFilesFromDirectory;
 import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
+import static org.apache.commons.lang.StringEscapeUtils.escapeJava;
 import static org.apache.commons.lang3.StringUtils.replace;
 
 @Slf4j
@@ -96,7 +97,7 @@ public class CSDescriptionService {
         return propertyMap;
     }
 
-    private static String unixify(String string) {
-        return replace(string, System.lineSeparator(), "\\n");
+    private static String unixify(final String unixString) {
+        return escapeJava(replace(unixString, System.lineSeparator(), "\n"));
     }
 }
