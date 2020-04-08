@@ -5,7 +5,7 @@ env:
       - M2_HOME=${HOME}/apache-maven-3.5.0 PATH=${M2_HOME}/bin:${PATH}
 
 jdk:
-  - oraclejdk8
+  - openjdk8
 
 cache:
   directories:
