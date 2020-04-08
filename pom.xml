@@ -81,7 +81,7 @@
         <!--Dependencies versions-->
         <dependency-management-impl.version>0.3.48</dependency-management-impl.version>
         <maven-plugin-annotations.version>3.5.1</maven-plugin-annotations.version>
-        <cloudslang-compiler.version>1.0.17</cloudslang-compiler.version>
+        <cloudslang-compiler.version>1.0.126</cloudslang-compiler.version>
         <score-content-sdk.version>1.10.6</score-content-sdk.version>
         <maven-release.version>3.3.9</maven-release.version>
         <maven-invoker.version>3.0.0</maven-invoker.version>
